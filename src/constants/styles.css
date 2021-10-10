@@ -1,0 +1,7 @@
+@import url(./colors.css);
+
+:root {
+  --main-border-radius: 30px;
+  --globalInput-border-radius: 25px;
+  --border-radius: 12px;
+}

@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  list-style: none;
+}
+
+.container a {
+  color: var(--secondary-light);
+  /* border: thin solid var(--secondary-light); */
+  box-shadow: 0 0 2px;
+  border-style: none;
+  outline: none;
+  border-radius: 50%;
+  margin: 10px 5px;
+  padding: 5px 8px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  font-size: 10px;
+}
+
+.container a:hover,
+.activeBtn a {
+  background-color: var(--secondary-light);
+  color: var(--primary);
+}
+
+.disabledBtn a,
+.disabledBtn a:hover {
+  border-color: var(--font-color);
+  color: var(--font-color);
+  background-color: inherit;
+  cursor: default;
+}
+
+.nextBtn a,
+.prevBtn a {
+  padding: 7px;
+  margin: auto 8px;
+}

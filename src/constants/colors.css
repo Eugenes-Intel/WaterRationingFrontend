@@ -1,0 +1,14 @@
+:root {
+  --primary: #00040a;
+  --secondary-light: #ffa000;
+  --secondary-dark: #ff6f00;
+  --background-color: #101823;
+  --deco-dark: rgba(255, 0, 76, 0.8);
+  --deco-pink: #ff004e;
+  --ornament: #4dd0e1;
+  --white: #fdfdfd;
+  --black: #00040a;
+  --nav-color: rgba(255, 255, 255, 0.205);
+  --font-color: #707070;
+  --font-color-light: #3596a3;
+}
