@@ -31,7 +31,7 @@ const AddIconSpan = styled.span`
 
 export function CrudButton(props) {
   return (
-    <CrudOperationsButton bgColor={props.bgColor}>
+    <CrudOperationsButton bgColor={props.bgColor} onClick={props.onClick}>
       <AddIconSpan>
         <FontAwesomeIcon icon={[props.iconBrand, props.iconName]} />
       </AddIconSpan>

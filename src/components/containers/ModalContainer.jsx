@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
-import { AddSuburb } from "../adds/AddSuburb";
+import { SuburbModal } from "../modals/SuburbModal";
 import { useSpring, animated } from "react-spring";
 
 const Container = styled.div`
@@ -36,7 +36,7 @@ const TitleBarContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px 15px;
+  padding: 5px 10px;
 `;
 
 const Title = styled.h2`
@@ -70,7 +70,7 @@ const ContentContainer = styled.div`
   /* margin: 10px; */
 `;
 
-export function AddsContainer(props) {
+export function ModalContainer(props) {
   const springAnimation = useSpring({
     config: {
       duration: 300,
@@ -94,7 +94,7 @@ export function AddsContainer(props) {
                 </CloseButton>
               </TitleBarContainer>
               <ContentContainer>
-                <AddSuburb />
+                <SuburbModal />
               </ContentContainer>
             </ModalWrapper>
           </animated.div>

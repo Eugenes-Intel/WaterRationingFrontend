@@ -12,11 +12,11 @@ export function Variance({ variance }) {
     <React.Fragment>
       {variance > 0 ? variance : variance * -1}
       {variance < 0 ? (
-        <VarianceArrow arrowColor="red">
+        <VarianceArrow arrowColor="green">
           <FontAwesomeIcon icon={["fas", "arrow-alt-circle-down"]} />
         </VarianceArrow>
       ) : (
-        <VarianceArrow arrowColor="green">
+        <VarianceArrow arrowColor="red">
           <FontAwesomeIcon icon={["fas", "arrow-alt-circle-up"]} />
         </VarianceArrow>
       )}

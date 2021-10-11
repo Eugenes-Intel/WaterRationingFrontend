@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import styled from "styled-components";
 import { ActiveTable } from "../ActiveTable";
 import { AddButton } from "../../global/AddButton";
 import { get, post } from "../../modules/Server";
-import { AddsContainer } from "./AddsContainer";
+import { ModalContainer } from "./ModalContainer";
 
 const Container = styled.div`
   height: 100%;
@@ -84,7 +84,7 @@ export function TableContainer() {
       <AddButtonContainer>
         <AddButton title="Suburb" onClick={() => setShowAddModal((prev) => !prev)} />
       </AddButtonContainer>
-      <AddsContainer
+      <ModalContainer
         showAddModal={showAddModal}
         setShowAddModal={() => setShowAddModal((prev) => !prev)}
       />
