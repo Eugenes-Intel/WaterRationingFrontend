@@ -52,20 +52,20 @@ export function TableContainer() {
   const [showAddModal, setShowAddModal] = useState(false);
 
   useEffect(() => {
-    async function fetchData() {
-      const res = await get(JSON.stringify(reqData))
-        .then((res) => res)
-        .catch((err) => console.log(err));
-      setSuburbs(res.data);
-    }
+    // async function fetchData() {
+    //   const res = await get(JSON.stringify(reqData))
+    //     .then((res) => res)
+    //     .catch((err) => console.log(err));
+    //   setSuburbs(res.data);
+    // }
 
-    async function postData() {
-      const res = await post(reqData)
-        .then((res) => res)
-        .catch((err) => console.log(err));
-    }
-    // postData();
-    fetchData();
+    // async function postData() {
+    //   const res = await post(reqData)
+    //     .then((res) => res)
+    //     .catch((err) => console.log(err));
+    // }
+    // // postData();
+    // fetchData();
   }, []);
 
   // useEffect(() => {
