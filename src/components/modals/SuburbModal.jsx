@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { CrudButton } from "../../global/CrudButton";
-import { post } from "../../modules/apis/api";
+import { post, get } from "../../modules/apis/api";
 
 const Container = styled.div`
   /* background-color: var(--primary); */
@@ -62,9 +62,7 @@ const axiosConfig = {
 };
 
 const data = {
-  city: {
-    name: "",
-  },
+  cityId: 0,
   name: "",
   density: 0,
   population: 0.0,
@@ -73,6 +71,15 @@ const data = {
 
 export function SuburbModal(props) {
   const [newSuburb, setNewSuburb] = useState({ axiosConfig, data });
+  const [cities, setCities] = useState([]);
+
+  useEffect(() => {
+    async function FetchCities(){
+      const scopeConfig = { axiosConfig };
+      const response = await get(scopeConfig).then((res) => res).catch((err) => console.log(err));
+      setCities(response?.data);
+    }
+  }, [])
 
   const onSave = (e) => {
     const Save = async () => {
@@ -98,7 +105,7 @@ export function SuburbModal(props) {
             onChange={(e) =>
               setNewSuburb({
                 ...newSuburb,
-                data: { ...newSuburb.data, city: { name: e.target.value } },
+                data: { ...newSuburb.data,  data: { ...newSuburb.data, cityId: e.target.value } },
               })
             }
           />

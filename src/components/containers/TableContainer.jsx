@@ -51,30 +51,6 @@ export function TableContainer() {
   const [suburbs, setSuburbs] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
 
-  useEffect(() => {
-    // async function fetchData() {
-    //   const res = await get(JSON.stringify(reqData))
-    //     .then((res) => res)
-    //     .catch((err) => console.log(err));
-    //   setSuburbs(res.data);
-    // }
-
-    // async function postData() {
-    //   const res = await post(reqData)
-    //     .then((res) => res)
-    //     .catch((err) => console.log(err));
-    // }
-    // // postData();
-    // fetchData();
-  }, []);
-
-  // useEffect(() => {
-  //   console.log("add toggled");
-  //   return () => {
-  //     console.log("cleaning toggle add");
-  //   };
-  // }, [showAddModal]);
-
   const toggleAdd = () => {
     setShowAddModal((prev) => !prev);
   };
