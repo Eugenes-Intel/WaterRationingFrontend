@@ -1,7 +1,9 @@
-import React from "react";
-import styled from "styled-components";
-import { TableContainer } from "./TableContainer";
-import { Sidebar } from "../Sidebar";
+import React from 'react';
+import styled from 'styled-components';
+import { TableContainer } from './TableContainer';
+import { Sidebar } from '../Sidebar';
+import { LandingPage } from '../pages/LandingPage';
+import { DensityPage } from '../pages/DensityPage';
 
 const Container = styled.div`
   height: 100%;
@@ -47,7 +49,7 @@ export function Dashboard() {
           <Sidebar />
         </SiderbarContainer>
         <ContentContainer>
-          <TableContainer />
+          <DensityPage />
         </ContentContainer>
       </DashboardSectionContainer>
     </Container>
