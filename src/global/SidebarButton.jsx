@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const ButtonSidebar = styled.button`
   border-radius: 30px;
@@ -16,5 +16,5 @@ const ButtonSidebar = styled.button`
 `;
 
 export default function SidebarButton(props) {
-  return <ButtonSidebar>{props.title}</ButtonSidebar>;
+  return <ButtonSidebar onClick={props.onClick}>{props.title}</ButtonSidebar>;
 }

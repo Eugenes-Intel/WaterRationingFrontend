@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import SidebarButton from '../global/SidebarButton';
+import { useHistory } from 'react-router-dom';
 
 const Container = styled.div`
   height: 100%;
@@ -44,12 +45,28 @@ const LogoutButton = styled.button`
 `;
 
 export function Sidebar(props) {
-  const interactions = ['Dashboard', 'Resources', 'Densities', 'Variance'];
+  const interactions = [
+    { title: 'Dashboard', route: '/' },
+    { title: 'Resources', route: '/resources' },
+    { title: 'Densities', route: '/densities' },
+    { title: 'Variance', route: '/variance' },
+  ];
+
+  const history = useHistory();
+
+  const changeRoute = (route) => history.push(route);
+
   return (
     <Container>
       <InteractionButtonsContainer>
         {interactions.map((interaction, index) => {
-          return <SidebarButton key={index} title={interaction} />;
+          return (
+            <SidebarButton
+              key={index}
+              title={interaction.title}
+              onClick={() => changeRoute(interaction.route)}
+            />
+          );
         })}
       </InteractionButtonsContainer>
       <LogoutButtonContainer>

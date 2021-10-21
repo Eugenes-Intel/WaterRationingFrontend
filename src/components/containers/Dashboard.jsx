@@ -6,6 +6,7 @@ import { LandingPage } from '../pages/LandingPage';
 import { DensityPage } from '../pages/DensityPage';
 import { Route, Switch } from 'react-router-dom';
 import { VariancePage } from '../pages/VariancePage';
+import { ResourcesPage } from '../pages/ResourcesPage';
 
 const Container = styled.div`
   height: 100%;
@@ -53,7 +54,7 @@ export function Dashboard() {
         <ContentContainer>
           <Switch>
             <Route exact path='/' component={LandingPage} />
-            <Route path='/resources' component={VariancePage} />
+            <Route path='/resources' component={ResourcesPage} />
             <Route path='/densities' component={DensityPage} />
             <Route path='/variance' component={VariancePage} />
           </Switch>
