@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import SidebarButton from "../global/SidebarButton";
+import React from 'react';
+import styled from 'styled-components';
+import SidebarButton from '../global/SidebarButton';
 
 const Container = styled.div`
   height: 100%;
@@ -44,7 +44,7 @@ const LogoutButton = styled.button`
 `;
 
 export function Sidebar(props) {
-  const interactions = ["Dashboard", "Suburbs", "Densities", "Variance"];
+  const interactions = ['Dashboard', 'Resources', 'Densities', 'Variance'];
   return (
     <Container>
       <InteractionButtonsContainer>

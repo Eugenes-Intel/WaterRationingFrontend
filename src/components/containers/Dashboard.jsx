@@ -4,6 +4,8 @@ import { TableContainer } from './TableContainer';
 import { Sidebar } from '../Sidebar';
 import { LandingPage } from '../pages/LandingPage';
 import { DensityPage } from '../pages/DensityPage';
+import { Route, Switch } from 'react-router-dom';
+import { VariancePage } from '../pages/VariancePage';
 
 const Container = styled.div`
   height: 100%;
@@ -49,7 +51,11 @@ export function Dashboard() {
           <Sidebar />
         </SiderbarContainer>
         <ContentContainer>
-          <DensityPage />
+          <Switch>
+            <Route exact path='/' component={LandingPage} />
+            <Route path='/densities' component={DensityPage} />
+            <Route path='/variance' component={VariancePage} />
+          </Switch>
         </ContentContainer>
       </DashboardSectionContainer>
     </Container>
