@@ -53,6 +53,7 @@ export function Dashboard() {
         <ContentContainer>
           <Switch>
             <Route exact path='/' component={LandingPage} />
+            <Route path='/resources' component={VariancePage} />
             <Route path='/densities' component={DensityPage} />
             <Route path='/variance' component={VariancePage} />
           </Switch>
