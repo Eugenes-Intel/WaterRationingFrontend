@@ -17,10 +17,26 @@ const InputDropdown = styled.input`
   }
 `;
 
+const PlaceholderOption = styled.option`
+  opacity: 0.6;
+  font-style: italic;
+`;
+
+const Option = styled.option`
+  font-size: 20px;
+`;
+
 export function GlobalDropdown(props) {
   return (
     <React.Fragment>
-      <InputDropdown />
+      <InputDropdown onChange={props.onChange}>
+        <PlaceholderOption value='' disabled selected hidden>
+          Select {props.placeholder}
+        </PlaceholderOption>
+        {props.entities.map((entity) => (
+          <Option value={entity.id}>{entity.name}</Option>
+        ))}
+      </InputDropdown>
     </React.Fragment>
   );
 }

@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import { CrudButton } from "../../global/CrudButton";
-import { post, get } from "../../modules/apis/api";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { CrudButton } from '../../global/CrudButton';
+import { GlobalDropdown } from '../../global/GlobalDropdown';
+import { post, get } from '../../modules/apis/api';
+import { axiosCitiesConfig, axiosSuburbsConfig } from '../../modules/configs/axiosConfigs';
 
 const Container = styled.div`
   /* background-color: var(--primary); */
@@ -54,65 +56,65 @@ const CrudButtonsContainer = styled.div`
   width: 100%;
 `;
 
-const axiosConfig = {
-  headers: {
-    "Content-Type": "application/json",
-    scope: "suburbs",
-  },
-};
-
 const data = {
   cityId: 0,
-  name: "",
+  name: '',
   density: 0,
   population: 0.0,
   allocation: 0.0,
 };
 
 export function SuburbModal(props) {
-  const [newSuburb, setNewSuburb] = useState({ axiosConfig, data });
+  const [newSuburb, setNewSuburb] = useState({ axiosConfig: axiosSuburbsConfig, data });
   const [cities, setCities] = useState([]);
 
   useEffect(() => {
-    async function FetchCities(){
-      const scopeConfig = { axiosConfig };
-      const response = await get(scopeConfig).then((res) => res).catch((err) => console.log(err));
-      setCities(response?.data);
+    async function FetchCities() {
+      const scopeConfig = { axiosConfig: axiosCitiesConfig };
+      const response = await get(scopeConfig)
+        .then((res) => res)
+        .catch((err) => console.log(err));
+      setCities(response.data);
     }
-  }, [])
+  }, []);
 
   const onSave = (e) => {
     const Save = async () => {
+      console.log('request', newSuburb);
       const response = await post(newSuburb)
         .then((res) => res)
-        .catch((err) => console.log(err));
-      console.log("response", response.data);
+        .catch((err) => alert(err));
+      alert(response.data);
     };
     Save();
   };
 
   const onCancel = (e) => {
-    setNewSuburb({ axiosConfig, data });
+    setNewSuburb({ axiosConfig: axiosSuburbsConfig, data });
   };
 
   return (
     <Container>
       <InputSectionContainer>
         <InputCategoryContainer>
-          <TextInput
-            placeholder="City"
+          <GlobalDropdown
+            placeholder='city'
+            entities={cities}
             // onChange={(e) => setNewSuburb((s) => (s.data.city.name = e.target.value))}
             onChange={(e) =>
               setNewSuburb({
                 ...newSuburb,
-                data: { ...newSuburb.data,  data: { ...newSuburb.data, cityId: e.target.value } },
+                data: {
+                  ...newSuburb.data,
+                  data: { ...newSuburb.data, cityId: parseInt(e.target.value) },
+                },
               })
             }
           />
         </InputCategoryContainer>
         <InputCategoryContainer>
           <TextInput
-            placeholder="Suburb"
+            placeholder='Suburb'
             // onChange={(e) => setNewSuburb((s) => (s.data.suburb = e.target.value))}
             onChange={(e) =>
               setNewSuburb({ ...newSuburb, data: { ...newSuburb.data, name: e.target.value } })
@@ -121,17 +123,17 @@ export function SuburbModal(props) {
         </InputCategoryContainer>
         <CrudButtonsContainer>
           <CrudButton
-            title="Save"
-            bgColor="var(--deco-pink)"
-            iconBrand="fas"
-            iconName="save"
+            title='Save'
+            bgColor='var(--deco-pink)'
+            iconBrand='fas'
+            iconName='save'
             onClick={(e) => onSave(e)}
           />
           <CrudButton
-            title="Cancel"
-            bgColor="var(--secondary-light)"
-            iconBrand="fas"
-            iconName="window-close"
+            title='Cancel'
+            bgColor='var(--secondary-light)'
+            iconBrand='fas'
+            iconName='window-close'
             onClick={(e) => onCancel(e)}
           />
         </CrudButtonsContainer>
@@ -139,7 +141,7 @@ export function SuburbModal(props) {
       <InputSectionContainer>
         <InputCategoryContainer>
           <TextInput
-            placeholder="Density"
+            placeholder='Density'
             onChange={(e) =>
               setNewSuburb({ ...newSuburb, data: { ...newSuburb.data, density: e.target.value } })
             }
@@ -147,7 +149,7 @@ export function SuburbModal(props) {
         </InputCategoryContainer>
         <InputCategoryContainer>
           <TextInput
-            placeholder="Popullation"
+            placeholder='Popullation'
             onChange={(e) =>
               setNewSuburb({
                 ...newSuburb,
@@ -156,7 +158,7 @@ export function SuburbModal(props) {
             }
           />
           <TextInput
-            placeholder="Allocation"
+            placeholder='Allocation'
             onChange={(e) =>
               setNewSuburb({
                 ...newSuburb,
