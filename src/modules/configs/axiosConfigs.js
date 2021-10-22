@@ -1,11 +1,11 @@
-export const axiosSuburbsConfig = {
-  headers: {
-    'Content-Type': 'application/json',
-    scope: 'cities',
-  },
+export const axiosCitiesConfig = {
+    headers: {
+        'Content-Type': 'application/json',
+        scope: 'cities',
+    },
 };
 
-export const axiosCitiesConfig = {
+export const axiosSuburbsConfig = {
   headers: {
     'Content-Type': 'application/json',
     scope: 'suburbs',

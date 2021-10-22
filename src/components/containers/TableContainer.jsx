@@ -2,8 +2,9 @@ import React, { useEffect, useState, createContext } from 'react';
 import styled from 'styled-components';
 import { ActiveTable } from '../ActiveTable';
 import { AddButton } from '../../global/AddButton';
-import { get, post } from '../../modules/Server';
 import { ModalContainer } from './ModalContainer';
+import { get } from '../../modules/apis/api';
+import { axiosSuburbsConfig } from '../../modules/configs/axiosConfigs';
 
 const Container = styled.div`
   height: 100%;
@@ -50,6 +51,17 @@ const resData = {
 export function TableContainer() {
   const [suburbs, setSuburbs] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
+
+  useEffect(() => {
+    async function FetchAllSuburbs() {
+      const scopeConfig = { axiosConfig: axiosSuburbsConfig };
+      const response = await get(scopeConfig)
+        .then((res) => res)
+        .catch((err) => alert(err));
+      setSuburbs(response.data);
+    }
+    FetchAllSuburbs();
+  }, [showAddModal]);
 
   const toggleAdd = () => {
     setShowAddModal((prev) => !prev);
