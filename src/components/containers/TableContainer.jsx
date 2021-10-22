@@ -1,9 +1,9 @@
-import React, { useEffect, useState, createContext } from "react";
-import styled from "styled-components";
-import { ActiveTable } from "../ActiveTable";
-import { AddButton } from "../../global/AddButton";
-import { get, post } from "../../modules/Server";
-import { ModalContainer } from "./ModalContainer";
+import React, { useEffect, useState, createContext } from 'react';
+import styled from 'styled-components';
+import { ActiveTable } from '../ActiveTable';
+import { AddButton } from '../../global/AddButton';
+import { get, post } from '../../modules/Server';
+import { ModalContainer } from './ModalContainer';
 
 const Container = styled.div`
   height: 100%;
@@ -27,9 +27,9 @@ const AddButtonContainer = styled.div`
 
 const reqData = {
   id: 0,
-  name: "Front End 2",
+  name: 'Front End 2',
   cityId: 17,
-  density: "low",
+  density: 'low',
   population: 12800,
   allocation: 18710.68,
   dailyAverageUsage: 21050.99,
@@ -37,7 +37,7 @@ const reqData = {
 
 const resData = {
   id: 0,
-  name: "",
+  name: '',
   cityId: 0,
   city: null,
   density: 0,
@@ -58,7 +58,7 @@ export function TableContainer() {
     <Container>
       <CityTitleContainer>Harare</CityTitleContainer>
       <AddButtonContainer>
-        <AddButton title="Suburb" onClick={() => setShowAddModal((prev) => !prev)} />
+        <AddButton title='Suburb' onClick={() => setShowAddModal((prev) => !prev)} />
       </AddButtonContainer>
       <ModalContainer
         showAddModal={showAddModal}
