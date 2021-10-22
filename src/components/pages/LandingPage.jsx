@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Bar, Line, Pie } from 'react-chartjs-2';
 import styled from 'styled-components';
 import { AddButton } from '../../global/AddButton';
 
@@ -43,6 +44,12 @@ const MainChart = styled.div`
   background-color: var(--background-color);
   border-radius: var(--main-border-radius);
   /* margin: auto; */
+  padding: 15px;
+`;
+
+const BarChart = styled.div`
+  height: 100%;
+  width: 100%;
 `;
 
 const SmallChartContainer = styled.div`
@@ -81,7 +88,30 @@ export function LandingPage(props) {
       </TopSection>
       <MidSection>
         <MainChartContainer>
-          <MainChart />
+          <MainChart>
+            <BarChart>
+              <Bar
+                data={{
+                  labels: ['a', 'b', 'c', 'd', 'e'],
+                  datasets: [
+                    {
+                      label: 'My First Dataset',
+                      data: [65, 59, 80, 81, 56],
+                      backgroundColor: [
+                        'rgba(255, 99, 132, 0.4)',
+                        'rgba(255, 159, 64, 0.4)',
+                        'rgba(75, 192, 192, 0.4)',
+                        'rgba(54, 162, 235, 0.4)',
+                        'rgba(153, 102, 255, 0.4)',
+                      ],
+                      pointStyle: 'circle',
+                    },
+                  ],
+                }}
+                options={{ maintainAspectRatio: false }}
+              />
+            </BarChart>
+          </MainChart>
         </MainChartContainer>
         <SmallChartContainer>
           <SmallChart />
