@@ -31,7 +31,7 @@ export function GlobalDropdown(props) {
           Select {props.placeholder}
         </PlaceholderOption>
         {props.entities.map((entity) => (
-          <Option value={entity.id}>{entity.name}</Option>
+          <Option value={JSON.stringify(entity)}>{entity.name}</Option>
         ))}
       </InputDropdown>
     </React.Fragment>
