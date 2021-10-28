@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Doughnut, Line, Pie } from 'react-chartjs-2';
 import styled from 'styled-components';
 import { DensityCard } from '../../global/DensityCard';
+import { get } from '../../modules/apis/api';
+import { axiosSuburbsConfig } from '../../modules/configs/axiosConfigs';
+import { convertDensity } from '../../modules/Utils';
 
 const Container = styled.div`
   display: flex;
@@ -43,6 +47,15 @@ const MainChart = styled.div`
   background-color: var(--background-color);
   border-radius: var(--main-border-radius);
   /* margin: auto; */
+  padding: 10px 15px;
+`;
+
+const Content = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const PieChartsContainer = styled.div`
@@ -62,6 +75,7 @@ const PieChart = styled.div`
   background-color: var(--background-color);
   border-radius: 100%;
   /* margin: auto; */
+  padding: 5px 10px;
 `;
 
 const BottomSection = styled.div`
@@ -71,13 +85,47 @@ const BottomSection = styled.div`
   align-items: center;
 `;
 
-const Metrice = styled.h4`
-  color: var(--font-color-light);
-`;
-
 const densities = ['Low', 'Medium', 'High'];
 
+const backgroundColors = [
+  'rgba(204, 201, 52, 0.4)',
+  'rgba(192, 75, 114, 0.4)',
+  'rgba(54, 162, 235, 0.4)',
+];
+
 export function DensityPage(props) {
+  const [lowDensities, setLowDensities] = useState([]);
+  const [mediumDensities, setMediumDensities] = useState([]);
+  const [highDensities, setHighDensities] = useState([]);
+  const [allDensities, setAllDensities] = useState([]);
+
+  useEffect(() => {
+    const fetchCities = async () => {
+      const scopeCofig = { axiosConfig: axiosSuburbsConfig };
+      const response = await get(scopeCofig)
+        .then((res) => res)
+        .catch((err) => alert(err));
+      response &&
+        (() => {
+          setLowDensities(
+            response.data.filter((suburb) => convertDensity(suburb.density) === 'Low')
+          );
+          setMediumDensities(
+            response.data.filter((suburb) => convertDensity(suburb.density) === 'Medium')
+          );
+          setHighDensities(
+            response.data.filter((suburb) => convertDensity(suburb.density) === 'High')
+          );
+          setAllDensities(response.data);
+        })();
+    };
+    fetchCities();
+  }, []);
+
+  const labels = allDensities.map((density) => density.population).sort((a, b) => a < b);
+  const densitiesList = [lowDensities, mediumDensities, highDensities];
+  const totalUsage = 20000;
+
   return (
     <Container>
       <TopSection>
@@ -85,11 +133,51 @@ export function DensityPage(props) {
       </TopSection>
       <MidSection>
         <MainChartContainer>
-          <MainChart />
+          <MainChart>
+            <Content>
+              <Line
+                data={{
+                  labels: labels,
+                  datasets: [
+                    {
+                      label: densities[0],
+                      data: lowDensities.map((density) => density.allocation),
+                      backgroundColor: backgroundColors[0],
+                    },
+                    {
+                      label: densities[1],
+                      data: mediumDensities.map((density) => density.allocation),
+                      backgroundColor: backgroundColors[1],
+                    },
+                    {
+                      label: densities[2],
+                      data: highDensities.map((density) => density.allocation),
+                      backgroundColor: backgroundColors[2],
+                    },
+                  ],
+                }}
+              />
+            </Content>
+          </MainChart>
         </MainChartContainer>
         <PieChartsContainer>
-          {densities.map((density, index) => (
-            <PieChart key={index} />
+          {densitiesList.map((density, index) => (
+            <PieChart key={index}>
+              <Doughnut
+                data={{
+                  labels: labels,
+                  datasets: [
+                    {
+                      label: 'high', //convertDensity(density.at(0).density),
+                      data: density.map((d) => d.allocation),
+                      //(density.reduce((current, previous) => current + previous) / totalUsage) *
+                      //100, //
+                      backgroundColor: backgroundColors[index],
+                    },
+                  ],
+                }}
+              />
+            </PieChart>
           ))}
         </PieChartsContainer>
       </MidSection>

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const InputDropdown = styled.input`
+const InputDropdown = styled.select`
   padding: 10px 25px;
   margin: 20px auto;
   color: var(--font-color-light);
@@ -10,16 +10,13 @@ const InputDropdown = styled.input`
   border-radius: var(--border-radius);
   background-color: var(--background-color);
   transition-duration: 0.8s;
-
-  &::placeholder {
-    color: var(--secondary-dark);
-    opacity: 0.7;
-  }
+  min-width: 65%;
 `;
 
 const PlaceholderOption = styled.option`
-  opacity: 0.6;
-  font-style: italic;
+  color: var(--secondary-dark);
+  opacity: 0.7;
+  /* font-style: italic; */
 `;
 
 const Option = styled.option`

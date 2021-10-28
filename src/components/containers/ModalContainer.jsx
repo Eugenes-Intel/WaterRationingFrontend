@@ -1,8 +1,8 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
-import styled from "styled-components";
-import { SuburbModal } from "../modals/SuburbModal";
-import { useSpring, animated } from "react-spring";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
+import styled from 'styled-components';
+import { SuburbModal } from '../modals/SuburbModal';
+import { useSpring, animated } from 'react-spring';
 
 const Container = styled.div`
   height: 100%;
@@ -89,12 +89,12 @@ export function ModalContainer(props) {
                 <Title>New Suburb</Title>
                 <CloseButton onClick={props.setShowAddModal}>
                   <CloseIconSpan>
-                    <FontAwesomeIcon icon={["fas", "times"]} />
+                    <FontAwesomeIcon icon={['fas', 'times']} />
                   </CloseIconSpan>
                 </CloseButton>
               </TitleBarContainer>
               <ContentContainer>
-                <SuburbModal />
+                <SuburbModal setShowAddModal={props.setShowAddModal} />
               </ContentContainer>
             </ModalWrapper>
           </animated.div>

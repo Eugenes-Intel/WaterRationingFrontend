@@ -47,9 +47,9 @@ const LogoutButton = styled.button`
 export function Sidebar(props) {
   const interactions = [
     { title: 'Dashboard', route: '/' },
-    { title: 'Resources', route: '/resources' },
     { title: 'Densities', route: '/densities' },
     { title: 'Variance', route: '/variance' },
+    { title: 'Resources', route: '/resources' },
   ];
 
   const history = useHistory();

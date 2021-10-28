@@ -58,7 +58,7 @@ export function TableContainer() {
       const response = await get(scopeConfig)
         .then((res) => res)
         .catch((err) => alert(err));
-      setSuburbs(response.data);
+      response && setSuburbs(response.data);
     }
     FetchAllSuburbs();
   }, [showAddModal]);

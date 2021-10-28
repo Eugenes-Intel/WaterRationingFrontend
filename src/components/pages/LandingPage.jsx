@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Bar, Line, Pie } from 'react-chartjs-2';
+import { Bar, Doughnut, Line, Pie } from 'react-chartjs-2';
 import styled from 'styled-components';
 import { AddButton } from '../../global/AddButton';
+import { GlobalDropdown } from '../../global/GlobalDropdown';
+import { get } from '../../modules/apis/api';
+import { axiosCitiesConfig, axiosSuburbsConfig } from '../../modules/configs/axiosConfigs';
 
 const Container = styled.div`
   display: flex;
@@ -18,7 +21,19 @@ const TopSection = styled.div`
   /* background-color: blanchedalmond; */
 `;
 
+const TopSectionButtonsContainer = styled.div`
+  width: 100%;
+  display: flex;
+  /* columns: 25% auto 25%; */
+  justify-content: space-between;
+`;
+
+const ButtonContainer = styled.div`
+  width: 100;
+`;
+
 const Title = styled.h1`
+  width: 100%;
   color: var(--font-color);
   text-transform: capitalize;
 `;
@@ -44,12 +59,15 @@ const MainChart = styled.div`
   background-color: var(--background-color);
   border-radius: var(--main-border-radius);
   /* margin: auto; */
-  padding: 15px;
+  padding: 10px 15px;
 `;
 
-const BarChart = styled.div`
+const Content = styled.div`
   height: 100%;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const SmallChartContainer = styled.div`
@@ -66,6 +84,7 @@ const SmallChart = styled.div`
   background-color: var(--background-color);
   border-radius: 20px;
   /* margin: auto; */
+  padding: 5px 10px;
 `;
 
 const BottomSection = styled.div`
@@ -79,42 +98,105 @@ const Metrice = styled.h4`
   color: var(--font-color-light);
 `;
 
+const backgroundColors = [
+  'rgba(255, 99, 132, 0.4)',
+  'rgba(255, 159, 64, 0.4)',
+  'rgba(75, 192, 192, 0.4)',
+  'rgba(204, 201, 52, 0.4)',
+  'rgba(192, 75, 114, 0.4)',
+  'rgba(54, 162, 235, 0.4)',
+  'rgba(153, 102, 255, 0.4)',
+];
+
+const pieColors = [
+  'rgba(255, 245, 99, 0.4)',
+  'rgba(172, 255, 64, 0.4)',
+  'rgba(75, 192, 192, 0.4)',
+  'rgba(52, 204, 196, 0.4)',
+  'rgba(75, 165, 192, 0.4)',
+  'rgba(54, 162, 235, 0.4)',
+  'rgba(102, 255, 230, 0.4)',
+];
+
+const cityTemplate = {
+  id: '',
+  name: '',
+  suburbs: [],
+};
+
 export function LandingPage(props) {
+  const [cities, setCities] = useState([]);
+  const [selectedCity, setSelectedCity] = useState(cityTemplate);
+
+  useEffect(() => {
+    (async () => {
+      const scopeConfig = { axiosConfig: axiosCitiesConfig };
+      const response = await get(scopeConfig)
+        .then((res) => res)
+        .catch((err) => alert(err));
+      response && setCities(response.data);
+      response && console.log('cities packed', response.data);
+    })();
+  }, []);
+
+  const city = cities.at(0);
   return (
     <Container>
       <TopSection>
-        <Title>water rationig overview</Title>
-        <AddButton title='Allocate' />
+        <Title>water rationing overview</Title>
+        <TopSectionButtonsContainer>
+          <ButtonContainer>
+            <GlobalDropdown
+              placeholder={'select city'}
+              entities={cities}
+              onChange={(e) => setSelectedCity(e.target.value)}
+            />
+          </ButtonContainer>
+          <ButtonContainer>
+            <AddButton title='Allocate' />
+          </ButtonContainer>
+        </TopSectionButtonsContainer>
       </TopSection>
       <MidSection>
         <MainChartContainer>
           <MainChart>
-            <BarChart>
+            <Content>
               <Bar
                 data={{
-                  labels: ['a', 'b', 'c', 'd', 'e'],
+                  labels: selectedCity.suburbs.map((suburb) => suburb.name),
                   datasets: [
                     {
                       label: 'My First Dataset',
-                      data: [65, 59, 80, 81, 56],
-                      backgroundColor: [
-                        'rgba(255, 99, 132, 0.4)',
-                        'rgba(255, 159, 64, 0.4)',
-                        'rgba(75, 192, 192, 0.4)',
-                        'rgba(54, 162, 235, 0.4)',
-                        'rgba(153, 102, 255, 0.4)',
-                      ],
+                      data: selectedCity.suburbs.map((suburb) => suburb.allocation),
+                      backgroundColor: backgroundColors,
                       pointStyle: 'circle',
                     },
                   ],
                 }}
                 options={{ maintainAspectRatio: false }}
               />
-            </BarChart>
+            </Content>
           </MainChart>
         </MainChartContainer>
         <SmallChartContainer>
-          <SmallChart />
+          <SmallChart>
+            <Content>
+              <Doughnut
+                data={{
+                  labels: selectedCity.suburbs.map((suburb) => suburb.name),
+                  datasets: [
+                    {
+                      label: 'My First Dataset',
+                      data: selectedCity.suburbs.map((suburb) => suburb.allocation),
+                      backgroundColor: pieColors,
+                      pointStyle: 'circle',
+                    },
+                  ],
+                }}
+                options={{ maintainAspectRatio: false }}
+              />
+            </Content>
+          </SmallChart>
         </SmallChartContainer>
       </MidSection>
       <BottomSection>

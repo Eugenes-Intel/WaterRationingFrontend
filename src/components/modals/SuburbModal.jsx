@@ -69,28 +69,30 @@ export function SuburbModal(props) {
   const [cities, setCities] = useState([]);
 
   useEffect(() => {
-    async function FetchCities() {
+    async function fetchCities() {
       const scopeConfig = { axiosConfig: axiosCitiesConfig };
       const response = await get(scopeConfig)
         .then((res) => res)
-        .catch((err) => console.log(err));
-      setCities(response.data);
+        .catch((err) => alert.log(err));
+      response && setCities(response.data);
     }
+    fetchCities();
   }, []);
 
   const onSave = (e) => {
     const Save = async () => {
-      console.log('request', newSuburb);
       const response = await post(newSuburb)
         .then((res) => res)
         .catch((err) => alert(err));
-      alert(response.data);
+      response && alert(response.data);
     };
     Save();
+    onCancel('done');
   };
 
   const onCancel = (e) => {
     setNewSuburb({ axiosConfig: axiosSuburbsConfig, data });
+    props.setShowModal();
   };
 
   return (
