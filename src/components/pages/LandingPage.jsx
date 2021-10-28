@@ -139,7 +139,6 @@ export function LandingPage(props) {
     })();
   }, []);
 
-  const city = cities.at(0);
   return (
     <Container>
       <TopSection>
@@ -149,7 +148,7 @@ export function LandingPage(props) {
             <GlobalDropdown
               placeholder={'select city'}
               entities={cities}
-              onChange={(e) => setSelectedCity(e.target.value)}
+              onChange={(e) => setSelectedCity(JSON.parse(e.target.value))}
             />
           </ButtonContainer>
           <ButtonContainer>
@@ -166,7 +165,7 @@ export function LandingPage(props) {
                   labels: selectedCity.suburbs.map((suburb) => suburb.name),
                   datasets: [
                     {
-                      label: 'My First Dataset',
+                      label: 'suburbs',
                       data: selectedCity.suburbs.map((suburb) => suburb.allocation),
                       backgroundColor: backgroundColors,
                       pointStyle: 'circle',
@@ -186,7 +185,7 @@ export function LandingPage(props) {
                   labels: selectedCity.suburbs.map((suburb) => suburb.name),
                   datasets: [
                     {
-                      label: 'My First Dataset',
+                      label: 'suburbs',
                       data: selectedCity.suburbs.map((suburb) => suburb.allocation),
                       backgroundColor: pieColors,
                       pointStyle: 'circle',
@@ -200,10 +199,25 @@ export function LandingPage(props) {
         </SmallChartContainer>
       </MidSection>
       <BottomSection>
-        <Metrice>Popullation:</Metrice>
-        <Metrice>Allocation:</Metrice>
-        <Metrice>Daily average:</Metrice>
-        <Metrice>Cities:</Metrice>
+        <Metrice>
+          Popullation:{' '}
+          {selectedCity.suburbs.reduce((acc, suburb) => {
+            return acc + suburb.population;
+          }, 0)}{' '}
+        </Metrice>
+        <Metrice>
+          Allocation:{' '}
+          {selectedCity.suburbs.reduce((acc, suburb) => {
+            return acc + suburb.allocation;
+          }, 0)}{' '}
+        </Metrice>
+        <Metrice>
+          Daily average:
+          {selectedCity.suburbs.reduce((acc, suburb) => {
+            return acc + suburb.dailyAverageUsage;
+          }, 0)}
+        </Metrice>
+        <Metrice>Suburbs: {selectedCity.suburbs.length}</Metrice>
       </BottomSection>
     </Container>
   );

@@ -1,12 +1,12 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
-import styled from "styled-components";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
+import styled from 'styled-components';
 
 const AddPersonnelButton = styled.button`
   border-radius: 5px;
   font-size: medium;
   line-height: 25px;
-  padding: 5px 12px;
+  padding: 5px 20px;
   margin: 10px 10px;
   box-shadow: 0 0 4px;
   border-style: none;
@@ -30,9 +30,9 @@ export function AddButton(props) {
   return (
     <AddPersonnelButton onClick={props.onClick}>
       <AddIconSpan>
-        <FontAwesomeIcon icon={["fas", "plus"]} />
+        <FontAwesomeIcon icon={['fas', 'plus']} />
       </AddIconSpan>
-      Add {props.title}
+      {props.title}
     </AddPersonnelButton>
   );
 }
