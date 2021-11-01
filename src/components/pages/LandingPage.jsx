@@ -3,8 +3,9 @@ import { Bar, Doughnut, Line, Pie } from 'react-chartjs-2';
 import styled from 'styled-components';
 import { AddButton } from '../../global/AddButton';
 import { GlobalDropdown } from '../../global/GlobalDropdown';
-import { get } from '../../modules/apis/api';
+import { get, getWith } from '../../modules/apis/api';
 import { axiosCitiesConfig, axiosSuburbsConfig } from '../../modules/configs/axiosConfigs';
+import { roundFloat } from '../../modules/Utils';
 
 const Container = styled.div`
   display: flex;
@@ -127,17 +128,39 @@ const cityTemplate = {
 export function LandingPage(props) {
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState(cityTemplate);
+  const [dailyAverageUsage, setDailyAverageUsage] = useState(0);
 
   useEffect(() => {
     (async () => {
       const scopeConfig = { axiosConfig: axiosCitiesConfig };
-      const response = await get(scopeConfig)
+      const response = await getWith(scopeConfig)
         .then((res) => res)
         .catch((err) => alert(err));
       response && setCities(response.data);
-      response && console.log('cities packed', response.data);
     })();
   }, []);
+
+  const dailyAverageUsageHandler = () => {
+    const totalSuburbAverageUsageHistory = selectedCity.suburbs.reduce((acc, suburb) => {
+      const suburbTotalUsageHistory = suburb.usageHistory.reduce((accUsage, history) => {
+        return accUsage + history.usage;
+      }, 0);
+      const suburbAverageUsageHistory =
+        suburbTotalUsageHistory !== 0 ? suburbTotalUsageHistory / suburb.usageHistory.length : 0;
+      return acc + suburbAverageUsageHistory;
+    }, 0);
+    const averageUsage =
+      totalSuburbAverageUsageHistory !== 0
+        ? totalSuburbAverageUsageHistory / selectedCity.suburbs.length
+        : 0;
+    return roundFloat(averageUsage);
+  };
+
+  const selectedCityHandler = (e) => {
+    setSelectedCity(JSON.parse(e.target.value));
+    setDailyAverageUsage(() => dailyAverageUsageHandler());
+    console.log('dailyAverageUsageHandler', dailyAverageUsageHandler());
+  };
 
   return (
     <Container>
@@ -148,7 +171,7 @@ export function LandingPage(props) {
             <GlobalDropdown
               placeholder={'select city'}
               entities={cities}
-              onChange={(e) => setSelectedCity(JSON.parse(e.target.value))}
+              onChange={(e) => selectedCityHandler(e)}
             />
           </ButtonContainer>
           <ButtonContainer>
@@ -211,12 +234,7 @@ export function LandingPage(props) {
             return acc + suburb.allocation;
           }, 0)}{' '}
         </Metrice>
-        <Metrice>
-          Daily average:
-          {selectedCity.suburbs.reduce((acc, suburb) => {
-            return acc + suburb.dailyAverageUsage;
-          }, 0)}
-        </Metrice>
+        <Metrice>Daily average: {dailyAverageUsage}</Metrice>
         <Metrice>Suburbs: {selectedCity.suburbs.length}</Metrice>
       </BottomSection>
     </Container>
